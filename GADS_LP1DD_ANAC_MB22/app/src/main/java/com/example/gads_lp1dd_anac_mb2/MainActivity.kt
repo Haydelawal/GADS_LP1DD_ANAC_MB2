@@ -15,34 +15,50 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.gads_lp1dd_anac_mb2.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var navController: NavController
 
     ////////// changing the color of each toolbar of each fragment
     private lateinit var listener: NavController.OnDestinationChangedListener
 
+    ////////// changing the color of each toolbar of each fragment
     @RequiresApi(Build.VERSION_CODES.M)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment
         val navController = navHostFragment.navController
 
         drawerLayout = binding.drawerLayout
         binding.navigationView.setupWithNavController(navController)
 
 
-        appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
+//        ORIGINAL, I MODIFIED IT TO ONE BELOW TO REMOVE THE BACK BUTTON ON THE ACTION BAR
+//        WHEN USING BOTTOM NAV VIEW TO NAVIGATE
+//        appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
+
+
+        appBarConfiguration = AppBarConfiguration( setOf(R.id.firstFragment, R.id.secondFragment, R.id.thirdFragment), drawerLayout)
+
         setupActionBarWithNavController(navController, appBarConfiguration)
 
+        ///// Setting Up the bottom nav
+         bottomNavigationView = binding.bottomNav
+        bottomNavigationView.setupWithNavController(navController)
+
+
+
+        ////////// changing the color of each toolbar of each fragment
         listener =
             NavController.OnDestinationChangedListener { controller, destination, arguments ->
 

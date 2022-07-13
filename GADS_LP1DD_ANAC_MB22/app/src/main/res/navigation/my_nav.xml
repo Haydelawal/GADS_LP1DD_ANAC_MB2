@@ -31,4 +31,9 @@
             app:argType="integer"
             android:defaultValue="22" />
     </fragment>
+    <fragment
+        android:id="@+id/thirdFragment"
+        android:name="com.example.gads_lp1dd_anac_mb2.ThirdFragment"
+        android:label="fragment_third"
+        tools:layout="@layout/fragment_third" />
 </navigation>
